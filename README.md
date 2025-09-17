@@ -1,195 +1,195 @@
-# Dijkstra Algorithm Implementation in C
+# C언어로 구현한 Dijkstra 알고리즘
 
-A high-performance, ASCII-only implementation of Dijkstra's shortest path algorithm in C.
+고성능 ASCII 전용 Dijkstra 최단 경로 알고리즘의 C언어 구현
 
-## Features
+## 특징
 
-- **Efficient Data Structures**: Binary heap-based priority queue for O((V+E)logV) performance
-- **Memory Optimized**: Careful memory management with proper cleanup
-- **Modular Design**: Clean separation of graph, priority queue, and algorithm components
-- **Comprehensive Testing**: Full test suite with edge cases and performance tests
-- **Interactive Demo**: User-friendly command-line interface
-- **Production Ready**: Error handling, input validation, and documentation
+- **효율적인 자료구조**: 이진 힙 기반 우선순위 큐로 O((V+E)logV) 성능 달성
+- **메모리 최적화**: 신중한 메모리 관리와 적절한 정리
+- **모듈형 설계**: 그래프, 우선순위 큐, 알고리즘 컴포넌트의 깔끔한 분리
+- **포괄적인 테스트**: 엣지 케이스와 성능 테스트를 포함한 완전한 테스트 스위트
+- **대화형 데모**: 사용자 친화적인 명령줄 인터페이스
+- **프로덕션 준비**: 에러 처리, 입력 검증, 문서화 완료
 
-## Project Structure
+## 프로젝트 구조
 
 ```
 Dijkstra-Algorithm/
 ├── src/
-│   ├── graph.c          # Graph data structure implementation
-│   ├── dijkstra.c       # Dijkstra algorithm core logic
-│   ├── priority_queue.c # Binary heap priority queue
-│   └── main.c           # Interactive demo program
+│   ├── graph.c          # 그래프 자료구조 구현
+│   ├── dijkstra.c       # Dijkstra 알고리즘 핵심 로직
+│   ├── priority_queue.c # 이진 힙 우선순위 큐
+│   └── main.c           # 대화형 데모 프로그램
 ├── include/
-│   ├── graph.h          # Graph structure and function declarations
-│   ├── dijkstra.h       # Algorithm function declarations
-│   └── priority_queue.h # Priority queue interface
+│   ├── graph.h          # 그래프 구조체 및 함수 선언
+│   ├── dijkstra.h       # 알고리즘 함수 선언
+│   └── priority_queue.h # 우선순위 큐 인터페이스
 ├── tests/
-│   └── test_dijkstra.c  # Comprehensive test suite
+│   └── test_dijkstra.c  # 포괄적인 테스트 스위트
 ├── docs/
-│   ├── architecture.md  # Detailed architecture documentation
-│   └── paper.md         # Academic paper on implementation
-├── Makefile             # Build system
-└── README.md            # This file
+│   ├── architecture.md  # 상세한 아키텍처 문서
+│   └── paper.md         # 구현에 대한 학술 논문
+├── Makefile             # 빌드 시스템
+└── README.md            # 이 파일
 ```
 
-## Building
+## 빌드하기
 
-### Requirements
-- GCC compiler (or compatible C compiler)
-- Make utility
-- Windows, Linux, or macOS
+### 요구사항
+- GCC 컴파일러 (또는 호환되는 C 컴파일러)
+- Make 유틸리티
+- Windows, Linux, 또는 macOS
 
-### Quick Start
+### 빠른 시작
 ```bash
-# Build everything
+# 전체 빌드
 make all
 
-# Run the interactive demo
+# 대화형 데모 실행
 make run
 
-# Run tests
+# 테스트 실행
 make test
 ```
 
-### Build Options
+### 빌드 옵션
 ```bash
-# Debug build with symbols
+# 디버그 심볼과 함께 디버그 빌드
 make debug
 
-# Optimized release build
+# 최적화된 릴리즈 빌드
 make release
 
-# Build with profiling support
+# 프로파일링 지원과 함께 빌드
 make profile
 
-# Clean build artifacts
+# 빌드 결과물 정리
 make clean
 ```
 
-## Usage
+## 사용법
 
-### Interactive Mode
-Run the main program for an interactive demonstration:
+### 대화형 모드
+대화형 데모를 위해 메인 프로그램을 실행하세요:
 ```bash
 make run
 ```
 
-The program provides a menu-driven interface to:
-1. Create sample graphs
-2. Add custom edges
-3. Visualize graph structure
-4. Run Dijkstra algorithm (all destinations or single target)
-5. View shortest paths
+이 프로그램은 다음과 같은 메뉴 기반 인터페이스를 제공합니다:
+1. 샘플 그래프 생성
+2. 사용자 정의 간선 추가
+3. 그래프 구조 시각화
+4. Dijkstra 알고리즘 실행 (모든 목적지 또는 단일 목적지)
+5. 최단 경로 보기
 
-### API Usage
+### API 사용법
 ```c
 #include "graph.h"
 #include "dijkstra.h"
 
-// Create a graph with 5 vertices
+// 5개 정점을 가진 그래프 생성
 Graph* graph = create_graph(5);
 
-// Add weighted edges
+// 가중치가 있는 간선 추가
 add_edge(graph, 0, 1, 4);
 add_edge(graph, 0, 2, 2);
 add_edge(graph, 1, 3, 5);
 add_edge(graph, 2, 3, 1);
 
-// Run Dijkstra from vertex 0
+// 정점 0에서 Dijkstra 실행
 DijkstraResult result = dijkstra(graph, 0);
 
 if (result.success) {
-    // Print distances to all vertices
+    // 모든 정점까지의 거리 출력
     print_distances(result, graph->num_vertices);
 
-    // Print path to specific vertex
+    // 특정 정점까지의 경로 출력
     print_path(result, 0, 3);
 
-    // Clean up
+    // 정리
     free_dijkstra_result(result);
 }
 
 destroy_graph(graph);
 ```
 
-## Algorithm Details
+## 알고리즘 세부사항
 
-### Time Complexity
-- **Overall**: O((V + E) log V)
-- **Space**: O(V + E)
+### 시간 복잡도
+- **전체**: O((V + E) log V)
+- **공간**: O(V + E)
 
-### Key Optimizations
-1. **Binary Heap Priority Queue**: Efficient min-heap with position tracking
-2. **Adjacency List**: Memory-efficient graph representation
-3. **Early Termination**: Single-target variant stops when destination is reached
-4. **Cache-Friendly**: Continuous memory layout for better performance
+### 주요 최적화
+1. **이진 힙 우선순위 큐**: 위치 추적이 가능한 효율적인 최소 힙
+2. **인접 리스트**: 메모리 효율적인 그래프 표현
+3. **조기 종료**: 단일 목적지 변형은 목적지에 도달하면 중단
+4. **캐시 친화적**: 더 나은 성능을 위한 연속적인 메모리 배치
 
-### Features
-- **Negative Weight Detection**: Prevents incorrect results
-- **Disconnected Graph Support**: Handles unreachable vertices
-- **Path Reconstruction**: Tracks parent pointers for path recovery
-- **Input Validation**: Comprehensive error checking
+### 기능
+- **음수 가중치 감지**: 잘못된 결과 방지
+- **연결되지 않은 그래프 지원**: 도달할 수 없는 정점 처리
+- **경로 재구성**: 경로 복구를 위한 부모 포인터 추적
+- **입력 검증**: 포괄적인 오류 검사
 
-## Testing
+## 테스트
 
-The test suite includes:
-- Graph creation and manipulation
-- Priority queue operations
-- Algorithm correctness verification
-- Edge cases (single vertex, disconnected graphs)
-- Performance testing with large graphs
+테스트 스위트에는 다음이 포함됩니다:
+- 그래프 생성 및 조작
+- 우선순위 큐 연산
+- 알고리즘 정확성 검증
+- 엣지 케이스 (단일 정점, 연결되지 않은 그래프)
+- 대형 그래프를 이용한 성능 테스트
 
-Run tests with:
+테스트 실행:
 ```bash
 make test
 ```
 
-## Performance
+## 성능
 
-Benchmarked performance on various graph sizes:
+다양한 그래프 크기에서의 벤치마크 성능:
 
-| Vertices | Edges | Time (ms) | Memory (MB) |
-|----------|-------|-----------|-------------|
-| 1,000    | 5,000 | 12.3      | 2.1         |
-| 10,000   | 50,000| 145.7     | 18.4        |
-| 100,000  | 500,000| 1,823.1  | 187.2       |
+| 정점 수 | 간선 수 | 시간 (ms) | 메모리 (MB) |
+|---------|---------|-----------|-------------|
+| 1,000   | 5,000   | 12.3      | 2.1         |
+| 10,000  | 50,000  | 145.7     | 18.4        |
+| 100,000 | 500,000 | 1,823.1   | 187.2       |
 
-## Documentation
+## 문서
 
-- **[Architecture Design](docs/architecture.md)**: Detailed system design and component specifications
-- **[Research Paper](docs/paper.md)**: Academic analysis of implementation and performance optimizations
+- **[아키텍처 설계](docs/architecture.md)**: 상세한 시스템 설계 및 컴포넌트 명세
+- **[연구 논문](docs/paper.md)**: 구현 및 성능 최적화에 대한 학술적 분석
 
-## Memory Management
+## 메모리 관리
 
-The implementation follows strict memory management practices:
-- All `malloc()` calls have corresponding `free()` calls
-- RAII-style resource management
-- Null pointer checks throughout
-- Memory leak testing with Valgrind (on Unix systems)
+이 구현은 엄격한 메모리 관리 관행을 따릅니다:
+- 모든 `malloc()` 호출에 대응하는 `free()` 호출
+- RAII 스타일 자원 관리
+- 전반적인 널 포인터 검사
+- Valgrind를 이용한 메모리 누수 테스트 (Unix 시스템에서)
 
-## Error Handling
+## 에러 처리
 
-Comprehensive error handling includes:
-- Input validation for all public functions
-- Graceful handling of memory allocation failures
-- Clear error messages for debugging
-- Safe cleanup on error conditions
+포괄적인 에러 처리에는 다음이 포함됩니다:
+- 모든 public 함수에 대한 입력 검증
+- 메모리 할당 실패의 우아한 처리
+- 디버깅을 위한 명확한 에러 메시지
+- 에러 조건에서의 안전한 정리
 
-## Contributing
+## 기여하기
 
-1. Fork the repository
-2. Create a feature branch
-3. Add tests for new functionality
-4. Ensure all tests pass
-5. Submit a pull request
+1. 리포지토리를 포크하세요
+2. 기능 브랜치를 생성하세요
+3. 새 기능에 대한 테스트를 추가하세요
+4. 모든 테스트가 통과하는지 확인하세요
+5. 풀 리퀘스트를 제출하세요
 
-## License
+## 라이센스
 
-This project is released under the MIT License. See LICENSE file for details.
+이 프로젝트는 MIT 라이센스 하에 배포됩니다. 자세한 내용은 LICENSE 파일을 참조하세요.
 
-## Acknowledgments
+## 감사의 글
 
-- Based on Edsger W. Dijkstra's 1959 algorithm
-- Implementation inspired by modern C best practices
-- Performance optimizations based on contemporary research
+- Edsger W. Dijkstra의 1959년 알고리즘을 기반으로 함
+- 현대적인 C 모범 사례에서 영감을 받은 구현
+- 현대 연구를 기반으로 한 성능 최적화
