@@ -1,0 +1,52 @@
+# Compiled Object files
+*.o
+*.obj
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Build directories
+bin/
+obj/
+
+# Debug files
+*.dSYM/
+*.pdb
+
+# IDE files
+.vscode/
+.vs/
+*.vcxproj*
+*.sln
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*~
+*.swp
+*.tmp
+
+# Core dumps
+core
+*.core
+
+# Profiling data
+gmon.out
+*.gcov
+*.gcda
+*.gcno
+
+# Valgrind output
+valgrind-out.txt
+
+# Memory checker output
+*.memcheck
